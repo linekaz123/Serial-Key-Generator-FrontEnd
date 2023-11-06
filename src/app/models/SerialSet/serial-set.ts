@@ -4,7 +4,7 @@ export class SerialSet {
     id!: number;
     name!: string;
     quantity!: number;
-    createdOn!: Date;
+    createdDate!: Date;
     configuration!: boolean;
     serialLength!: number;
     numbers!: boolean;

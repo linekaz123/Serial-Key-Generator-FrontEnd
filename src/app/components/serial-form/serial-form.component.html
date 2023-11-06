@@ -1,0 +1,25 @@
+<div [formGroup]="serialSetForm">
+
+    <div class="container">
+        <div class="row" style="border: 1px solid #8b8b8b;border-radius: 20px;">
+          <div class="col" style="padding: 50px;">
+            <h3>Serial Set Creator</h3>
+              <label for="serialSetName">Serial Set Name:</label>
+              <input type="text" id="serialSetName" formControlName="name" /><br><br><br>
+              <label for="quantity">Numbers of Serials:</label>
+              <input type="number" id="quantity" formControlName="quantity" /><br>
+              <button (click)="createSerialSet()">Create</button>
+              <button (click)="cancel()">Cancel</button>
+          </div>
+          <div class="col" ><div style="background-color: #8b8b8b;margin: 100px;padding: 20px;border-radius: 25px;">
+            <h4>Configuration:</h4>
+            <label><input type="checkbox" formControlName="numbers" /> Numbers</label><br><br>
+            <label><input type="checkbox" formControlName="lowerCase" /> Lowercase chars</label><br><br>
+            <label><input type="checkbox" formControlName="upperCase" /> Uppercase chars</label><br><br>
+            <label for="exclusions">Exclusions:</label>
+            <input type="text" id="exclusions" formControlName="exclusions" /><br><br>
+            <label for="serialLength">Serial Length:</label>
+            <input type="number" id="serialLength" formControlName="serialLength" /><br><br>
+          </div></div>
+        </div>
+       

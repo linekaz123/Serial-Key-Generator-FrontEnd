@@ -4,4 +4,5 @@ export class SerialNumber {
     id!: number;
     value!: string;
     serialSet!: SerialSet;
+    createdDate!:Date;
 }

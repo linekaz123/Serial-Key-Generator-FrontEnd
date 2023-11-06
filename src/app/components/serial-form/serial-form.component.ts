@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SerialSet } from 'src/app/models/SerialSet/serial-set';
 import { SerialSetService } from 'src/app/services/serial-set.service';
 
 @Component({
-  selector: 'app-serial-set',
-  templateUrl: './serial-set.component.html',
-  styleUrls: ['./serial-set.component.css'],
+  selector: 'app-serial-form',
+  templateUrl: './serial-form.component.html',
+  styleUrls: ['./serial-form.component.css']
 })
-export class SerialSetComponent implements OnInit {
+export class SerialFormComponent implements OnInit {
+
   serialSets: SerialSet[] = [];
   serialSetForm!: FormGroup;
   selectedSerialSet: SerialSet = new SerialSet();
@@ -74,55 +75,6 @@ export class SerialSetComponent implements OnInit {
     }
   }
 
-  deleteSerialSetById(id: number): void {
-    this.serialSetService.deleteSerialSetById(id).subscribe(
-      (success) => {
-        console.log('Delete success');
-        this.getAllSerialSets();
-        this.selectedSerialSet = new SerialSet();
-        alert(`Serial Set with ID ${id} deleted successfully!`);
-      },
-      (error) => {
-        console.error('Error deleting serial set:', error);
-  
-        let errorMessage = 'Unknown error';
-  
-        if (error && error.error && error.error.message) {
-          // Use the error message from the backend response
-          errorMessage = error.error.message;
-        }
-  
-        alert(`Error deleting serial set: ${errorMessage}`);
-      }
-    );
-  }
-  
-  exportSerialNumbersToCSV(serialSetName: string): void {
-    this.serialSetService.exportSerialNumbersToCSV(serialSetName).subscribe(
-      (success) => {
-        console.log('Export success');
-        alert(`Serial Numbers exported to CSV successfully for Serial Set ${serialSetName}!`);
-      },
-      (error) => {
-        console.error('Error exporting serial numbers:', error);
-  
-        let errorMessage = 'Unknown error';
-  
-        if (error && error.error && error.error.message) {
-          // Use the error message from the backend response
-          errorMessage = error.error.message;
-        }
-  
-        alert(`Error exporting serial numbers: ${errorMessage}`);
-      }
-    );
-  }
-  
-  
-
-  toggleButtons(serialSet: SerialSet): void {
-    this.selectedSerialSet = serialSet;
-  }
 
   cancel(): void {
     this.serialSetForm.reset();

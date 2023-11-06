@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SerialSet } from 'src/app/models/SerialSet/serial-set';
 import { SerialSetService } from 'src/app/services/serial-set.service';
 
 @Component({
-  selector: 'app-serial-set',
-  templateUrl: './serial-set.component.html',
-  styleUrls: ['./serial-set.component.css'],
+  selector: 'app-serial-list',
+  templateUrl: './serial-list.component.html',
+  styleUrls: ['./serial-list.component.css']
 })
-export class SerialSetComponent implements OnInit {
+export class SerialListComponent implements OnInit {
+
   serialSets: SerialSet[] = [];
-  serialSetForm!: FormGroup;
   selectedSerialSet: SerialSet = new SerialSet();
 
-  constructor(private serialSetService: SerialSetService, private fb: FormBuilder) {}
+  constructor(private serialSetService: SerialSetService) {}
 
   ngOnInit(): void {
-    this.initForm();
     this.getAllSerialSets();
   }
 
@@ -32,47 +30,9 @@ export class SerialSetComponent implements OnInit {
     );
   }
 
-  initForm(): void {
-    this.serialSetForm = this.fb.group({
-      name: ['', Validators.required],
-      quantity: [0, [Validators.required, Validators.min(1)]],
-      configuration: [false],
-      serialLength: [0],
-      numbers: [false],
-      upperCase: [false],
-      lowerCase: [false],
-      exclusions: [''],
-    });
-  }
+  
 
-  createSerialSet(): void {
-    if (this.serialSetForm.valid) {
-      const newSerialSet: SerialSet = {
-        ...this.serialSetForm.value,
-      };
-
-      this.serialSetService.createSerialSet(newSerialSet).subscribe(
-        (createdSerialSet) => {
-          console.log('Serial Set created successfully:', createdSerialSet);
-          this.getAllSerialSets();
-          this.serialSetForm.reset();
-          alert(`Serial Set created successfully: ${JSON.stringify(createdSerialSet)}`);
-        },
-        (error) => {
-          console.error('Error creating serial set:', error);
-
-          let errorMessage = 'Unknown error';
-
-          if (error && error.error && error.error.message) {
-            // Use the error message from the backend response
-            errorMessage = error.error.message;
-          }
-
-          alert(`Error creating serial set: ${errorMessage}`);
-        }
-      );
-    }
-  }
+  
 
   deleteSerialSetById(id: number): void {
     this.serialSetService.deleteSerialSetById(id).subscribe(
@@ -124,8 +84,4 @@ export class SerialSetComponent implements OnInit {
     this.selectedSerialSet = serialSet;
   }
 
-  cancel(): void {
-    this.serialSetForm.reset();
-    this.selectedSerialSet = new SerialSet();
-  }
 }

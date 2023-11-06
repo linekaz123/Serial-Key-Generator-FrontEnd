@@ -24,16 +24,13 @@ export class SerialSetService {
     return this.http.get<SerialSet>(`${this.apiUrl}/${id}`);
   }
   deleteSerialSetById(id: number): Observable<boolean> {
-    return this.http.delete<string>(`${this.apiUrl}/delete/${id}`).pipe(
-      map(response => true),  
-      catchError(() => of(false))  )
+    return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
+  
   }
   
   exportSerialNumbersToCSV(serialSetName: string): Observable<boolean> {
-    return this.http.get<string>(`${this.apiUrl}/export/${serialSetName}`).pipe(
-      map(response => true), 
-      catchError(() => of(false)) 
-    );
+    return this.http.get<boolean>(`${this.apiUrl}/export/${serialSetName}`);
   }
+  
   
 }

@@ -1,0 +1,26 @@
+<div class="container"><div class="row">
+    <div class="col">
+      <h3>Serial Set Table</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Created On</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let serialSet of serialSets" (click)="toggleButtons(serialSet)">
+            <td>{{ serialSet.name }}</td>
+            <td>{{ serialSet.quantity }}</td>
+            <td>{{ serialSet.createdDate | date: 'yyyy-MM-dd' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="selectedSerialSet">
+        <button (click)="exportSerialNumbersToCSV(selectedSerialSet.name)">Download</button>
+        <button (click)="deleteSerialSetById(selectedSerialSet.id)">Delete</button>
+      </div>
+    </div>
+</div></div>
