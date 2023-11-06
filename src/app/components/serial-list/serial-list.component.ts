@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SerialSet } from 'src/app/models/SerialSet/serial-set';
+import { SerialSetResponse } from 'src/app/models/serial-set-response';
 import { SerialSetService } from 'src/app/services/serial-set.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { SerialSetService } from 'src/app/services/serial-set.service';
 })
 export class SerialListComponent implements OnInit {
 
-  serialSets: SerialSet[] = [];
-  selectedSerialSet: SerialSet = new SerialSet();
+  serialSetsResponse: SerialSetResponse[] = [];
+  selectedSerialSet: SerialSetResponse = new SerialSetResponse();
 
   constructor(private serialSetService: SerialSetService) {}
 
@@ -21,7 +21,7 @@ export class SerialListComponent implements OnInit {
   getAllSerialSets(): void {
     this.serialSetService.getAllSerialSets().subscribe(
       (data) => {
-        this.serialSets = data;
+        this.serialSetsResponse = data;
       },
       (error) => {
         console.error('Error fetching serial sets:', error);
@@ -34,13 +34,13 @@ export class SerialListComponent implements OnInit {
 
   
 
-  deleteSerialSetById(id: number): void {
-    this.serialSetService.deleteSerialSetById(id).subscribe(
+  deleteSerialSetByName(name:string): void {
+    this.serialSetService.deleteSerialSetByName(name).subscribe(
       (success) => {
         console.log('Delete success');
         this.getAllSerialSets();
-        this.selectedSerialSet = new SerialSet();
-        alert(`Serial Set with ID ${id} deleted successfully!`);
+        this.selectedSerialSet = new SerialSetResponse();
+        alert(`Serial Set named ${name} deleted successfully!`);
       },
       (error) => {
         console.error('Error deleting serial set:', error);
@@ -80,7 +80,7 @@ export class SerialListComponent implements OnInit {
   
   
 
-  toggleButtons(serialSet: SerialSet): void {
+  toggleButtons(serialSet: SerialSetResponse): void {
     this.selectedSerialSet = serialSet;
   }
 

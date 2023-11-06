@@ -10,8 +10,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let serialSet of serialSets" (click)="toggleButtons(serialSet)">
-            <td>{{ serialSet.name }}</td>
+          <tr *ngFor="let serialSet of serialSetsResponse" (click)="toggleButtons(serialSet)">
+            <td>{{ serialSet.name}}</td>
             <td>{{ serialSet.quantity }}</td>
             <td>{{ serialSet.createdDate | date: 'yyyy-MM-dd' }}</td>
           </tr>
@@ -20,7 +20,7 @@
 
       <div *ngIf="selectedSerialSet">
         <button (click)="exportSerialNumbersToCSV(selectedSerialSet.name)">Download</button>
-        <button (click)="deleteSerialSetById(selectedSerialSet.id)">Delete</button>
+        <button (click)="deleteSerialSetByName(selectedSerialSet.name)">Delete</button>
       </div>
     </div>
 </div></div>

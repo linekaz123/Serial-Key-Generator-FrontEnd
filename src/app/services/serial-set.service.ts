@@ -1,36 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { SerialSetRequest } from '../models/serial-set-request';
+import { SerialSetResponse } from '../models/serial-set-response';
 import { environment } from 'src/environments/environment';
-import { SerialSet } from '../models/SerialSet/serial-set';
-
 @Injectable({
   providedIn: 'root',
 })
 export class SerialSetService {
-  private apiUrl: string = `${environment.apiUrl}/api/serialsets`;
+
+  private baseUrl: string = `${environment.apiUrl}/api/serialsets`;
 
   constructor(private http: HttpClient) {}
 
-  createSerialSet(serialSet: SerialSet): Observable<SerialSet> {
-    return this.http.post<SerialSet>(`${this.apiUrl}/create`, serialSet);
+  createSerialSet(serialSetRequest: SerialSetRequest): Observable<SerialSetResponse> {
+    return this.http.post<SerialSetResponse>(`${this.baseUrl}/create`, serialSetRequest);
   }
 
-  getAllSerialSets(): Observable<SerialSet[]> {
-    return this.http.get<SerialSet[]>(`${this.apiUrl}/all`);
+  getAllSerialSets(): Observable<SerialSetResponse[]> {
+    return this.http.get<SerialSetResponse[]>(`${this.baseUrl}/all`);
   }
 
-  getSerialSetById(id: number): Observable<SerialSet> {
-    return this.http.get<SerialSet>(`${this.apiUrl}/${id}`);
+  getSerialSetByName(name: string): Observable<SerialSetResponse> {
+    return this.http.get<SerialSetResponse>(`${this.baseUrl}/${name}`);
   }
-  deleteSerialSetById(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.apiUrl}/delete/${id}`);
-  
+
+  deleteSerialSetByName(name: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/delete/${name}`);
   }
-  
+
   exportSerialNumbersToCSV(serialSetName: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/export/${serialSetName}`);
+    return this.http.get<boolean>(`${this.baseUrl}/export/${serialSetName}`);
   }
-  
-  
 }

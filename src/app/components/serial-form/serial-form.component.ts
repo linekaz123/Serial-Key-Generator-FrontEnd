@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SerialSet } from 'src/app/models/SerialSet/serial-set';
+import { SerialSet } from 'src/app/models/serial-set';
+import { SerialSetRequest } from 'src/app/models/serial-set-request';
 import { SerialSetService } from 'src/app/services/serial-set.service';
 
 @Component({
@@ -10,28 +11,16 @@ import { SerialSetService } from 'src/app/services/serial-set.service';
 })
 export class SerialFormComponent implements OnInit {
 
-  serialSets: SerialSet[] = [];
+ 
   serialSetForm!: FormGroup;
-  selectedSerialSet: SerialSet = new SerialSet();
 
   constructor(private serialSetService: SerialSetService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.getAllSerialSets();
   }
 
-  getAllSerialSets(): void {
-    this.serialSetService.getAllSerialSets().subscribe(
-      (data) => {
-        this.serialSets = data;
-      },
-      (error) => {
-        console.error('Error fetching serial sets:', error);
-        alert(`Error fetching serial sets: ${JSON.stringify(error)}`);
-      }
-    );
-  }
+
 
   initForm(): void {
     this.serialSetForm = this.fb.group({
@@ -48,14 +37,13 @@ export class SerialFormComponent implements OnInit {
 
   createSerialSet(): void {
     if (this.serialSetForm.valid) {
-      const newSerialSet: SerialSet = {
+      const newSerialSet: SerialSetRequest = {
         ...this.serialSetForm.value,
       };
 
       this.serialSetService.createSerialSet(newSerialSet).subscribe(
         (createdSerialSet) => {
           console.log('Serial Set created successfully:', createdSerialSet);
-          this.getAllSerialSets();
           this.serialSetForm.reset();
           alert(`Serial Set created successfully: ${JSON.stringify(createdSerialSet)}`);
         },
@@ -78,6 +66,5 @@ export class SerialFormComponent implements OnInit {
 
   cancel(): void {
     this.serialSetForm.reset();
-    this.selectedSerialSet = new SerialSet();
   }
 }
