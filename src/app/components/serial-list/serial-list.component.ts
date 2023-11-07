@@ -31,12 +31,9 @@ export class SerialListComponent implements OnInit {
   }
 
   
-
-  
-
-  deleteSerialSetByName(name:string): void {
+  deleteSerialSetByName(name: string): void {
     this.serialSetService.deleteSerialSetByName(name).subscribe(
-      (success) => {
+      () => {
         console.log('Delete success');
         this.getAllSerialSets();
         this.selectedSerialSet = new SerialSetResponse();
@@ -44,14 +41,7 @@ export class SerialListComponent implements OnInit {
       },
       (error) => {
         console.error('Error deleting serial set:', error);
-  
-        let errorMessage = 'Unknown error';
-  
-        if (error && error.error && error.error.message) {
-          // Use the error message from the backend response
-          errorMessage = error.error.message;
-        }
-  
+        const errorMessage = this.extractErrorMessage(error);
         alert(`Error deleting serial set: ${errorMessage}`);
       }
     );
@@ -59,26 +49,22 @@ export class SerialListComponent implements OnInit {
   
   exportSerialNumbersToCSV(serialSetName: string): void {
     this.serialSetService.exportSerialNumbersToCSV(serialSetName).subscribe(
-      (success) => {
+      () => {
         console.log('Export success');
         alert(`Serial Numbers exported to CSV successfully for Serial Set ${serialSetName}!`);
       },
       (error) => {
         console.error('Error exporting serial numbers:', error);
-  
-        let errorMessage = 'Unknown error';
-  
-        if (error && error.error && error.error.message) {
-          // Use the error message from the backend response
-          errorMessage = error.error.message;
-        }
-  
+        const errorMessage = this.extractErrorMessage(error);
         alert(`Error exporting serial numbers: ${errorMessage}`);
       }
     );
   }
+
   
-  
+  private extractErrorMessage(error: any): string {
+    return error && error.error && error.error.message ? error.error.message : 'Unknown error';
+  }
 
   toggleButtons(serialSet: SerialSetResponse): void {
     this.selectedSerialSet = serialSet;

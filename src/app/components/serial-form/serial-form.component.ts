@@ -45,7 +45,7 @@ export class SerialFormComponent implements OnInit {
         (createdSerialSet) => {
           console.log('Serial Set created successfully:', createdSerialSet);
           this.serialSetForm.reset();
-          alert(`Serial Set created successfully: ${JSON.stringify(createdSerialSet)}`);
+          alert(`Serial generation in progress`);
         },
         (error) => {
           console.error('Error creating serial set:', error);
@@ -53,7 +53,7 @@ export class SerialFormComponent implements OnInit {
           let errorMessage = 'Unknown error';
 
           if (error && error.error && error.error.message) {
-            // Use the error message from the backend response
+            
             errorMessage = error.error.message;
           }
 

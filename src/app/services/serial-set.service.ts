@@ -25,11 +25,12 @@ export class SerialSetService {
     return this.http.get<SerialSetResponse>(`${this.baseUrl}/${name}`);
   }
 
-  deleteSerialSetByName(name: string): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.baseUrl}/delete/${name}`);
+  deleteSerialSetByName(name: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${name}`);
   }
-
-  exportSerialNumbersToCSV(serialSetName: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/export/${serialSetName}`);
+  
+  exportSerialNumbersToCSV(serialSetName: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/export/${serialSetName}`);
   }
+  
 }
